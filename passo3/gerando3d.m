@@ -7,7 +7,7 @@ page_output_immediately(1);
 addpath(genpath('lib-mcode'))
 addpath(genpath('lib-mcode2'))
 
-DIRECTORY='imagens';
+DIRECTORY='..\imagens\img2';
 % salvando cada dado em um txt separado
 for ID=1:9      
   IMAGEREF = [DIRECTORY filesep num2str(ID) '_ref.bmp'];
