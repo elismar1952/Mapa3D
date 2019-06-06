@@ -10,8 +10,7 @@ function gray=vermelho2binario(rgb,vecolor)
           gray(i,j)=1;
         else
           gray(i,j)=0;
-        
-        %rgb(lin,col,cor)
+       %rgb(lin,col,cor)
         %rgb(lin,col,:)
         %rgb(lin,col,:)
         endif

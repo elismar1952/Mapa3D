@@ -25,7 +25,7 @@ function R=thevectorisequal(a,b)
   end
     
   
-  if(dot(a,b)/(norm(a)*norm(b))>0.99)  
+  if(dot(a,b)/(norm(a)*norm(b))>0.90)  
   R=true;
   else
   R=false;
