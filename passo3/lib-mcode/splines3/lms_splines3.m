@@ -1,10 +1,10 @@
-function [P XINT]=lms_splines3(X,Y,NPARTS,varargin)
+function [P XINT]=lms_splines3(X,Y,NPARTS,WS,LEVEL)
 
 
     % Lee y ordena parametros de entrada
     % W es el peso de (X,Y)
     % LEVEL es si se usara continuidade de 0, 1 o 2 derivada
-    [X Y W LEVEL]=check_parameters(X,Y,NPARTS,varargin{:});
+    [X Y W LEVEL]=check_parameters(X,Y,NPARTS,WS,LEVEL);
 
     % Agrupa en intervalos XINT
     % Retorna Xs datos X por grupos, son NPARTS grupos    
@@ -29,6 +29,8 @@ function [P XINT]=lms_splines3(X,Y,NPARTS,varargin)
     % 0=A2*p
     [Y2 A2 C2]=generate_values_2(Xs,Ys,Ws,XINT);
 
+    SIZEP=size(Az,2);
+
     %%%%%%%%%%%%%%%%%
     At=[Az;A0;A1;A2];
     Yt=[Yz;Y0;Y1;Y2];
@@ -42,17 +44,24 @@ function [P XINT]=lms_splines3(X,Y,NPARTS,varargin)
         C=diag([Cz;C0;C1;C2]);
     end
 
-    p=inv(At'*C*At)*At'*C*Yt;
+    p=inv(At'*C*At+0.00001*eye(SIZEP))*At'*C*Yt;
     EE=sqrt(meansq(Yt-At*p));
     pmin=p;
     EEmin=EE;
+    EEtmp=EE;
 
     E=100;
     ITER=0;
+    ITERMAX=20000;
+
     disp('SOLVING LMS CUBIC SPLINES: Please wait ...');
-    while (E>=0.01)&&(ITER<3000)
+    while (E>=0.01)&&(ITER<ITERMAX)
+
+        if mod(ITER,100)==0
+            fprintf(stdout,'ITER %5d of %5d. E:%6.3f\r',ITER,ITERMAX,E);
+        end
         plast=p;
-        p=p+inv(At'*C*At+0.00001*eye(length(p)))*At'*C*(Yt-At*p);
+        p=p+inv(At'*C*At+0.00001*eye(SIZEP))*At'*C*(Yt-At*p);
 
         E=100*max(abs(p-plast))/min(abs(p(abs(p) > 0)));% mean(abs(p));
 
@@ -65,6 +74,8 @@ function [P XINT]=lms_splines3(X,Y,NPARTS,varargin)
 
         ITER=ITER+1;
     end
+    fprintf(stdout,'ITER %5d of %5d. E:%6.3f\n',ITER,ITERMAX,E);
+    %fprintf(stdout,'\nSOLVED LMS CUBIC SPLINES [OK]\n');
 
     %figure;
     %plot(EE,'-o');
@@ -82,6 +93,7 @@ function [P XINT]=lms_splines3(X,Y,NPARTS,varargin)
 
 endfunction
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Yz Az Cz]=generate_values_z(Xs,Ys,Ws)
 
     NPARTS=size(Xs,1);
@@ -113,6 +125,7 @@ function [Yz Az Cz]=generate_values_z(Xs,Ys,Ws)
 
 endfunction
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Y0 A0 C0]=generate_values_0(Xs,Ys,Ws,XINT)
 
     NPARTS=size(Xs,1);
@@ -140,6 +153,7 @@ function [Y0 A0 C0]=generate_values_0(Xs,Ys,Ws,XINT)
 
 endfunction
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Y1 A1 C1]=generate_values_1(Xs,Ys,Ws,XINT)
 
     NPARTS=size(Xs,1);
@@ -167,7 +181,7 @@ function [Y1 A1 C1]=generate_values_1(Xs,Ys,Ws,XINT)
 
 endfunction
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Y2 A2 C2]=generate_values_2(Xs,Ys,Ws,XINT)
 
     NPARTS=size(Xs,1);
@@ -195,6 +209,7 @@ function [Y2 A2 C2]=generate_values_2(Xs,Ys,Ws,XINT)
 
 endfunction
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Xs Ys XINT Ws]=generate_Xs_Ys_XINT(X,Y,NPARTS,W)
 
 
@@ -225,6 +240,7 @@ function [Xs Ys XINT Ws]=generate_Xs_Ys_XINT(X,Y,NPARTS,W)
     endfor
 endfunction
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [X Y W LEVEL]=check_parameters(X,Y,NPARTS,varargin)
 
     if(~isvector(X))

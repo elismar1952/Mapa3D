@@ -1,3 +1,4 @@
+%
 clc
 close all
 
@@ -7,38 +8,36 @@ page_output_immediately(1);
 addpath(genpath('lib-mcode'))
 addpath(genpath('lib-mcode2'))
 
-DIRECTORY='..\imagens\img2';
+% diretorio das imagens
+DIRECTORY='../imagens/ResultadoFinalCorte'; 
+RESULTADO='output'; 
+
+% Dados do algoritmo de calibração
+PARAMS=[    h0=400; ...
+            D=1.0; ...
+            Q=pi/3; ...
+            f=1.8; ...
+            g=1.8];
+
+% quantidade de imagens
+L=10; 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+mkdir(RESULTADO);
+
 % salvando cada dado em um txt separado
-for ID=1:9      
+for ID=1:L      
   IMAGEREF = [DIRECTORY filesep num2str(ID) '_ref.bmp'];
   IMAGEOBJ = [DIRECTORY filesep num2str(ID) '_obj.bmp'];
    
-  PARAMS=[    h0=400; ...
-              D=1.0; ...
-              Q=pi/3; ...
-              f=1.8; ...
-              g=1.8];
-              
-  nome='receba';            
+
+  disp(' ');
+  disp(['PASOU:',IMAGEOBJ])  ;
   
-  sfun(PARAMS,IMAGEREF,IMAGEOBJ,false,nome,ID);
+  sfun(PARAMS,IMAGEREF,IMAGEOBJ,false,RESULTADO,ID,RESULTADO);
 endfor
 
+juntar_arquivos_e_plot3d(RESULTADO,L)
 
-%juntar todos os txt
-filedata=[ nome num2str(1)  '.txt'];
-dat = load (filedata);
-delete(filedata);
-for ID=2:9
-%carregar dados do ficheiro
-  filedata=[ nome num2str(ID)  '.txt'];
-  DDD=load (filedata);
-  dat =[dat; DDD];
-  delete(filedata)
-endfor
 
-% plotando a superficie
-plot3 (dat(:,1), dat(:,2), dat(:,3), "o") 
-daspect ([1 1 1]);
-
-print('3d.png','-dpng')

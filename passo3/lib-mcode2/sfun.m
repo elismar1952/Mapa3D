@@ -1,4 +1,4 @@
-function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,nome,ID)
+function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID,OUTPUT)
  
   IMG = imread(IMAGEPATH1);
   IMG_BIN_REF=IMG>0.5;
@@ -34,16 +34,18 @@ function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,nome,ID)
     c0=YREF-YLIN;
     b0=XREF-0.5*W;
 
+    imagesc(IMG_BIN);
+    hold on
+    plot(XLIN,YLIN,'-o');
+    hold off
+    print(fullfile(OUTPUT,[num2str(ID),'_curve.png']),'-dpng')
+
 
     [X Y Z]=Tfun(PARAMS,b0,c0,d0);
 
-%salvar em nome
-data= [X' Y' Z'];
-save('-ascii',[nome num2str(ID) '.txt'],'data');
-  
-
-    
-
+    %salvar em pasta
+    data= [X' Y' Z'];
+    save('-ascii',fullfile(pasta,[num2str(ID) '.txt']),'data');
  
 endfunction
 
