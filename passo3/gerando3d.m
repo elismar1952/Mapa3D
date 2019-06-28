@@ -9,7 +9,8 @@ addpath(genpath('lib-mcode'))
 addpath(genpath('lib-mcode2'))
 
 % diretorio das imagens
-DIRECTORY='../imagens/ResultadoFinalCorte'; 
+% DIRECTORY='../imagens/ResultadoFinalCorte';
+DIRECTORY='../imagens/img2_CaixaBranca_cut' 
 RESULTADO='output'; 
 
 % Dados do algoritmo de calibração
@@ -20,24 +21,25 @@ PARAMS=[    h0=400; ...
             g=1.8];
 
 % quantidade de imagens
-L=10; 
+ENDD=14; 
+INIT=2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mkdir(RESULTADO);
 
 % salvando cada dado em um txt separado
-for ID=1:L      
+for ID=INIT:ENDD      
   IMAGEREF = [DIRECTORY filesep num2str(ID) '_ref.bmp'];
   IMAGEOBJ = [DIRECTORY filesep num2str(ID) '_obj.bmp'];
    
 
   disp(' ');
-  disp(['PASOU:',IMAGEOBJ])  ;
+  disp(['IMAGE:',IMAGEOBJ])  ;
   
-  sfun(PARAMS,IMAGEREF,IMAGEOBJ,false,RESULTADO,ID,RESULTADO);
+  sfun(PARAMS,IMAGEREF,IMAGEOBJ,true,RESULTADO,ID,RESULTADO);
 endfor
 
-juntar_arquivos_e_plot3d(RESULTADO,L)
+juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
 
 

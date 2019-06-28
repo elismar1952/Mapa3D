@@ -1,16 +1,16 @@
-function juntar_arquivos_e_plot3d(RESULTADO,L)
+function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
 
     NN=128;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Juntar todos os dados em 'dat'
-    filedata=fullfile(RESULTADO,[ num2str(1)  '.txt']);
+    filedata=fullfile(RESULTADO,[ num2str(INIT)  '.txt']);
     dat = load (filedata);
     plot(dat(:,1),  dat(:,3), "o") 
     %daspect ([1 1 1]);
     print(fullfile(RESULTADO,'1_3d.png'),'-dpng')
 
-    for ID=2:L
+    for ID=(INIT+1):ENDD
       filedata=fullfile(RESULTADO,[ num2str(ID)  '.txt']);
       DDD=load (filedata);
 
@@ -23,7 +23,7 @@ function juntar_arquivos_e_plot3d(RESULTADO,L)
 
 
     xi =linspace(min(dat(:,1)),max(dat(:,1)),NN);
-    yi =linspace(min(dat(:,2)),max(dat(:,2)),2*L);
+    yi =linspace(min(dat(:,2)),max(dat(:,2)),2*(ENDD));
     [xxi, yyi] = meshgrid ( xi,yi);
     zzi = griddata(dat(:,1), dat(:,2), dat(:,3), xxi, yyi);
 

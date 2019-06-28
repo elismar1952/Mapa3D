@@ -1,13 +1,13 @@
 %
 addpath(genpath('mcode'))
 
-DIRETORIO_ENTRADA='../imagens/img0';
+DIRETORIO_ENTRADA='../imagens/img2_CaixaBranca';
 
-DIRETORIO_SAIDA='../imagens/img1';
+DIRETORIO_SAIDA='../imagens/img2_CaixaBranca_cut';
 
-CORTAR_PIXELS_W=350;
+CORTAR_PIXELS_W=410;
 
-CORTAR_PIXELS_H=50;
+CORTAR_PIXELS_H=100;
 
 
 cortar_imagens( DIRETORIO_ENTRADA, ...

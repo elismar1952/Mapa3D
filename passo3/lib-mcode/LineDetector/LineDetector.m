@@ -7,6 +7,7 @@ classdef LineDetector  < handle
         ORDER
         PARTS
         LEVEL
+        UMBRAL
     end
 
 
@@ -28,6 +29,7 @@ classdef LineDetector  < handle
             obj.ORDER=5;
             obj.PARTS=8;
             obj.LEVEL=1;
+            obj.UMBRAL=32;
 
         end
 
@@ -35,10 +37,10 @@ classdef LineDetector  < handle
         function [XOPT YOPT]=calculates_curve(obj,varargin)
             
             [XOPT YOPT]=curve_lms_poly_spline(  obj.IMG_BIN, ...    %% Imagen binaria
-                                                %obj.ORDER, ...      %% polinomies order
                                                 obj.PARTS, ...      %% Parts of curve
                                                 obj.CUMULUSON, ...  %% Active cumulus algorithm 
-                                                obj.LEVEL);         %% Level o analysis 
+                                                obj.LEVEL, ...      %% Level o analysis 
+                                                obj.UMBRAL); 
 
         end
 
@@ -128,6 +130,7 @@ classdef LineDetector  < handle
 
 
             imagesc(obj.IMG_BIN);
+            colormap(gray)
             daspect([1 1 1])
             hold on;
             plot(XREF,YREF);%,'-o');
@@ -145,6 +148,12 @@ classdef LineDetector  < handle
         %% Establee 
         function set_reconstruction_level(obj,LEVEL)
             obj.LEVEL=LEVEL;
+        end
+
+        %%%%%%%%%%%%%%%%%%%%%% SET %%%%%%%%%%%%%%%%%%%%%%%%%
+        %% Establee 
+        function set_reconstruction_umbral(obj,UMBRAL)
+            obj.UMBRAL=UMBRAL;
         end
 
         %%%%%%%%%%%%%%%%%%%%%% SET %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -169,6 +178,12 @@ classdef LineDetector  < handle
         %% retorna el 
         function LEVEL=get_reconstruction_level(obj)
             LEVEL=obj.LEVEL;
+        end
+
+        %%%%%%%%%%%%%%%%%%%%%% GET %%%%%%%%%%%%%%%%%%%%%%%%%
+        %% retorna el 
+        function UMBRAL=get_reconstruction_umbral(obj)
+            UMBRAL=obj.UMBRAL;
         end
 
         %%%%%%%%%%%%%%%%%%%%%% GET %%%%%%%%%%%%%%%%%%%%%%%%%

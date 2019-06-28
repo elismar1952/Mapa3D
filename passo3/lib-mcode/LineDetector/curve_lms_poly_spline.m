@@ -6,7 +6,7 @@
                                                         NPARTS, ...          %% Parts of curve
                                                         CUMULUSON=false, ... %% Active cumulus algorithm 
                                                         LEVEL=1, ...         %% Level o analysis 
-                                                        varargin)            %% 
+                                                        UMBRAL)            %% 
 
             XOPT=0; 
             YOPT=0;
@@ -38,10 +38,18 @@
                 endfor
             else
                 for II=1:N
+                    MAXWID=1.0;
                     WS(II)=1.0;
                 endfor
             end
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % Elimino los cumulos pequenos
+            TMP=(WS*MAXWID)>=UMBRAL;
+            XS=XS(TMP);
+            YS=YS(TMP);
+            WS=WS(TMP);
 
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             %% obtenndo polinomio P(II,:) para o intervalos XINT
@@ -54,7 +62,7 @@
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             %% Avaliando polinomios no intervalos
             disp('Avaliando Splines 3r ordem (P,XINT) ...');
-            XOPT=[1:NCOL];
+            XOPT=[min(XS):max(XS)];
             YOPT = eval_splines(P,XINT,XOPT/NCOL);
             
             disp('Solved LMS [OK]');
@@ -75,6 +83,7 @@
             endfor
 
             imagesc(IMG_BIN);
+            colormap(gray)
             daspect([1 1 1])
             hold on;
             plot((XVAR*WW)',YVAR');%,'-o');

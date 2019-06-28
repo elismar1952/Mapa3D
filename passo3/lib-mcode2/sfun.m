@@ -1,13 +1,29 @@
 function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID,OUTPUT)
  
-  IMG = imread(IMAGEPATH1);
-  IMG_BIN_REF=IMG>0.5;
+    IMG = imread(IMAGEPATH1);
+    if(length(size(IMG))>=3)
+        error('A imagen nao pode ter formato rgb');
+    end
+    IMG_BIN_REF=IMG>0.5;
 
  
-  IMG = imread(IMAGEPATH2);
-  IMG_BIN=IMG>0.5;
+    IMG = imread(IMAGEPATH2);
+    if(length(size(IMG))>=3)
+        error('A imagen nao pode ter formato rgb');
+    end
+    IMG_BIN=IMG>0.5;
 
-   if(size(IMG_BIN,1)~=size(IMG_BIN_REF,1))
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    if(mean(mean(IMG_BIN))>0.5)
+        IMG_BIN=IMG_BIN<0.5;
+    end
+
+    if(mean(mean(IMG_BIN_REF))>0.5)
+        IMG_BIN_REF=IMG_BIN_REF<0.5;
+    end
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    if(size(IMG_BIN,1)~=size(IMG_BIN_REF,1))
         error('Differents number of lines in the images');
     end
     
@@ -25,10 +41,11 @@ function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID,OUTPUT)
     [XLIN YLIN]=R.calculates_curve();
 
     R = LineDetector(IMG_BIN_REF);
-    R.set_reconstruction_cumulus_on(CUMULUSON);
-    R.set_reconstruction_level(1);
-    R.set_reconstruction_parts(10);
-    [XREF YREF]=R.calculates_curve();
+    %R.set_reconstruction_cumulus_on(CUMULUSON);
+    %R.set_reconstruction_level(1);
+    %R.set_reconstruction_parts(10);
+    [XREF YREF PP]=R.calculates_line_ref_automatically(XLIN,CUMULUSON);
+    %[XREF YREF]=R.calculates_curve();
 
     d0=H/2-YREF;
     c0=YREF-YLIN;
