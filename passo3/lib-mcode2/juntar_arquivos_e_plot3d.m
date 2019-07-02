@@ -4,20 +4,22 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Juntar todos os dados em 'dat'
-    filedata=fullfile(RESULTADO,[ num2str(INIT)  '.txt']);
-    dat = load (filedata);
-    plot(dat(:,1),  dat(:,3), "o") 
-    %daspect ([1 1 1]);
-    print(fullfile(RESULTADO,'1_3d.png'),'-dpng')
 
-    for ID=(INIT+1):ENDD
+    for ID=INIT:ENDD
       filedata=fullfile(RESULTADO,[ num2str(ID)  '.txt']);
       DDD=load (filedata);
+      disp(["Data loaded:" filedata ]);
 
       plot(DDD(:,1), DDD(:,3), "o") 
       %daspect ([1 1 1]);
-      print(fullfile(RESULTADO,[num2str(ID),'_3d.png']),'-dpng')
-      dat =[dat; DDD];
+      filedataname=fullfile(RESULTADO,[num2str(ID),'_3d.png']);
+      print(filedataname,'-dpng')
+      if(ID==INIT)
+        dat =DDD;
+      else
+        dat =[dat; DDD];
+      end
+      disp(["Saved the image:" filedataname ]);
     endfor
     % Agora dat esta completo
 
@@ -38,7 +40,9 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     zlabel('metros')
     colormap(jet)
     daspect ([1 1 1]);
-    print(h1,fullfile(RESULTADO,'scatter3.png'),'-dpng')
+    filedata=fullfile(RESULTADO,'scatter3.png');
+    print(h1,filedata,'-dpng')
+    disp(["Saved the image:" filedata ]);
 
     figure;
     h2=gcf();
@@ -48,7 +52,9 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     ylabel('metros')
     zlabel('metros')
     daspect ([1 1 1]);
-    print(h2,fullfile(RESULTADO,'all_mesh.png'),'-dpng')
+    filedata=fullfile(RESULTADO,'all_mesh.png');
+    print(h2,filedata,'-dpng')
+    disp(["Saved the image:" filedata ]);
 
 
     figure;
@@ -59,6 +65,8 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     ylabel('metros')
     zlabel('metros')
     daspect ([1 1 1]);
-    print(h3,fullfile(RESULTADO,'all_contour.png'),'-dpng')
+    filedata=fullfile(RESULTADO,'all_contour.png');
+    print(h3,filedata,'-dpng')
+    disp(["Saved the image:" filedata ]);
 
 endfunction

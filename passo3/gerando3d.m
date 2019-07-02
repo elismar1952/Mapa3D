@@ -10,7 +10,7 @@ addpath(genpath('lib-mcode2'))
 
 % diretorio das imagens
 % DIRECTORY='../imagens/ResultadoFinalCorte';
-DIRECTORY='../imagens/img2_CaixaBranca_cut' 
+DIRECTORY='../imagens/img2_CaixaBranca_cut2' 
 RESULTADO='output'; 
 
 % Dados do algoritmo de calibração
