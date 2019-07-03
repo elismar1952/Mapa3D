@@ -11,7 +11,7 @@ addpath(genpath('lib-mcode2'))
 % diretorio das imagens
 % DIRECTORY='../imagens/ResultadoFinalCorte';
 DIRECTORY='../imagens/img2_CaixaBranca_cut2' 
-RESULTADO='output'; 
+RESULTADO='output_points'; 
 
 % Dados do algoritmo de calibração
 PARAMS=[    h0=400; ...
@@ -37,7 +37,7 @@ for ID=INIT:ENDD
   disp(' ');
   disp(['IMAGE:',IMAGEOBJ])  ;
   
-  sfun(PARAMS,IMAGEREF,IMAGEOBJ,true,RESULTADO,ID);
+  pfun(PARAMS,IMAGEREF,IMAGEOBJ,true,RESULTADO,ID);
 endfor
 
 juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
