@@ -2,14 +2,14 @@ clc
 close all
 addpath(genpath('mcode'));
   
-   rgb = (imread ('C:\Users\alex\Desktop\4d\padroes\cortadas\padroes0000.bmp'));
+   rgb = (imread ('/home/fernando/Downloads/30.jpg'));
    figure(1);
    
    
    
    subplot(1,2,1);
    imshow(rgb);
-   title('ннн IMAGEM RGB ннн');
+   title('IMAGEM RGB');
    
    gray=vermelho2binario(rgb,[34,25,52]);
    subplot(1,2,2);

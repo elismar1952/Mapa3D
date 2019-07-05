@@ -1,5 +1,5 @@
-
-function R=thevectorisequal(a,b)
+%
+function R=thevectorisequal(a,b,fator=0.1)
   %os dois são iguais
   if sum(size(a)==size(b))!=2
     error('os vetores nao tem o mesmo tamanho');
@@ -25,16 +25,10 @@ function R=thevectorisequal(a,b)
   end
     
   
-  if(dot(a,b)/(norm(a)*norm(b))>0.90)  
-  R=true;
+  if(norm(b-a)/(norm(b))<fator)  
+    R=true;
   else
-  R=false;
+    R=false;
   end
 endfunction
-
-
-size ([1, 2; 3, 4; 5, 6])
-
-
-[nr, nc] = size ([1, 2; 3, 4; 5, 6])
-   
+  
