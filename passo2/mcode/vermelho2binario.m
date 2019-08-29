@@ -1,4 +1,4 @@
-function gray=vermelho2binario(rgb,vecolor)
+function gray=vermelho2binario(rgb,vecolor, ErrPc=0.1)
     a = size (rgb);
     %a1 igual numeros de linhas e a2 numero de colunas
     gray = zeros(a(1),a(2));
@@ -6,7 +6,7 @@ function gray=vermelho2binario(rgb,vecolor)
       for j=1 : a(2)
         vec1=cast([rgb(i,j,1),rgb(i,j,2),rgb(i,j,3)],'double');
         vec2=cast(vecolor,'double');
-        if thevectorisequal(vec1,vec2)
+        if thevectorisequal(vec1,vec2, ErrPc)
           gray(i,j)=1;
         else
           gray(i,j)=0;
