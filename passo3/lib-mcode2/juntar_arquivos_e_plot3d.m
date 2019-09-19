@@ -35,9 +35,9 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     figure;
     h1=gcf();
     scatter3(dat(:,1), dat(:,2), dat(:,3))
-    xlabel('metros')
-    ylabel('metros')
-    zlabel('metros')
+    xlabel('cm')
+    ylabel('cm')
+    zlabel('cm')
     colormap(jet)
     daspect ([1 1 1]);
     filedata=fullfile(RESULTADO,'scatter3.png');
@@ -48,9 +48,9 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     h2=gcf();
     surf(xxi,yyi,zzi)
     colormap(jet)
-    xlabel('metros')
-    ylabel('metros')
-    zlabel('metros')
+    xlabel('cm')
+    ylabel('cm')
+    zlabel('cm')
     daspect ([1 1 1]);
     filedata=fullfile(RESULTADO,'all_mesh.png');
     print(h2,filedata,'-dpng')
@@ -61,9 +61,9 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     h3=gcf();
     contour(xxi,yyi,zzi,64)
     colormap(jet)
-    xlabel('metros')
-    ylabel('metros')
-    zlabel('metros')
+    xlabel('cm')
+    ylabel('cm')
+    zlabel('cm')
     daspect ([1 1 1]);
     filedata=fullfile(RESULTADO,'all_contour.png');
     print(h3,filedata,'-dpng')
