@@ -53,6 +53,12 @@ function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
 
     imagesc(IMG_BIN);
     hold on
+    plot(XREF,YREF,'-o');
+    hold off
+    print(fullfile(pasta,[num2str(ID),'_ref.png']),'-dpng')
+
+    imagesc(IMG_BIN);
+    hold on
     plot(XLIN,YLIN,'-o');
     hold off
     print(fullfile(pasta,[num2str(ID),'_curve.png']),'-dpng')
