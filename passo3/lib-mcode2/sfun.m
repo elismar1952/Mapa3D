@@ -51,7 +51,7 @@ function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
     c0=YREF-YLIN;
     b0=XREF-0.5*W;
 
-    imagesc(IMG_BIN);
+    imagesc(IMG_BIN_REF);
     hold on
     plot(XREF,YREF,'-o');
     hold off

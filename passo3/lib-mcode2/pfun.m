@@ -40,7 +40,7 @@ function [B Y C]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
     [XLIN YLIN]=R.calculates_points();
 
     R = PointsDetector(IMG_BIN_REF);
-    R.set_reconstruction_cumulus_on(CUMULUSON);
+    %R.set_reconstruction_cumulus_on(CUMULUSON);
     %R.set_reconstruction_level(1);
     %R.set_reconstruction_parts(10);
     [XREF YREF PP]=R.calculates_line_ref_automatically(XLIN);
@@ -49,6 +49,12 @@ function [B Y C]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
     d0=H/2-YREF;
     c0=YREF-YLIN;
     b0=XREF-0.5*W;
+
+    imagesc(IMG_BIN_REF);
+    hold on
+    plot(XREF,YREF,'-o');
+    hold off
+    print(fullfile(pasta,[num2str(ID),'_ref.png']),'-dpng')
 
     imagesc(IMG_BIN);
     hold on

@@ -1,6 +1,19 @@
 function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
 
     NN=128;
+    
+
+    for ID=INIT:ENDD
+      filedata=fullfile(RESULTADO,[ num2str(ID)  '.txt']);
+      DDD=load (filedata);
+      if ID==INIT
+         MAXZ=max(DDD(:,3));
+         MINZ=min(DDD(:,3));
+      else
+         MAXZ=max(max(DDD(:,3)),MAXZ);
+         MINZ=min(min(DDD(:,3)),MINZ);
+      end
+    endfor
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Juntar todos os dados em 'dat'
@@ -11,6 +24,7 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
       disp(["Data loaded:" filedata ]);
 
       plot(DDD(:,1), DDD(:,3), "o") 
+      ylim ([MINZ MAXZ])
       %daspect ([1 1 1]);
       filedataname=fullfile(RESULTADO,[num2str(ID),'_3d.png']);
       print(filedataname,'-dpng')
