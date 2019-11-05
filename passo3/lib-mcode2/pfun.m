@@ -1,4 +1,4 @@
-function [B Y C]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
+function [X Y Z]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
  
     IMG = imread(IMAGEPATH1);
     if(length(size(IMG))>=3)
@@ -51,14 +51,18 @@ function [B Y C]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
     b0=XREF-0.5*W;
 
     imagesc(IMG_BIN_REF);
+    daspect ([1 1 1]);
     hold on
     plot(XREF,YREF,'-o');
+    daspect ([1 1 1]);
     hold off
     print(fullfile(pasta,[num2str(ID),'_ref.png']),'-dpng')
 
     imagesc(IMG_BIN);
+    daspect ([1 1 1]);
     hold on
     plot(XLIN,YLIN,'-o');
+    daspect ([1 1 1]);
     hold off
     print(fullfile(pasta,[num2str(ID),'_curve.png']),'-dpng')
 
@@ -68,6 +72,9 @@ function [B Y C]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
     %salvar em pasta
     data= [X' Y' Z'];
     save('-ascii',fullfile(pasta,[num2str(ID) '.txt']),'data');
+
+    %%% conf
+    save('-ascii',fullfile(pasta,'out_all_params.txt'),'PARAMS');
  
 endfunction
 

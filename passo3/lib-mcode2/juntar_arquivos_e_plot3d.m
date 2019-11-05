@@ -37,6 +37,9 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     endfor
     % Agora dat esta completo
 
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    save('-ascii',fullfile(RESULTADO,'out_all_data.txt'),'dat');
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     xi =linspace(min(dat(:,1)),max(dat(:,1)),NN);
     yi =linspace(min(dat(:,2)),max(dat(:,2)),2*(ENDD));
