@@ -5,7 +5,7 @@ function cortar_imagens( DIRETORIO_ENTRADA, ...
                          CORTAR_PIXELS_H)
 
 
-files = glob(fullfile(DIRETORIO_ENTRADA,'*.bmp'));
+files = glob(fullfile(DIRETORIO_ENTRADA,'*.jpg'));
 mkdir(DIRETORIO_SAIDA);
 N=length(files);
 
