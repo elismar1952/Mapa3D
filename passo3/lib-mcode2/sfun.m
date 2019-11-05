@@ -1,5 +1,7 @@
 function [B Y C]=sfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
  
+    mkdir(pasta)
+
     IMG = imread(IMAGEPATH1);
     if(length(size(IMG))>=3)
         error('A imagen nao pode ter formato rgb');
