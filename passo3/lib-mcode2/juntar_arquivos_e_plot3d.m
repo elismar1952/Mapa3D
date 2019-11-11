@@ -51,7 +51,7 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     % plotando a superficie  de todos os dados de 'dat'
     figure;
     h1=gcf();
-    scatter3(dat(:,1), dat(:,2), dat(:,3))
+    scatter3(dat(:,1), dat(:,2), dat(:,3),[], dat(:,3))
     xlabel('cm')
     ylabel('cm')
     zlabel('cm')
