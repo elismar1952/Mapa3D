@@ -75,6 +75,10 @@ function [X Y Z]=pfun(PARAMS,IMAGEPATH1,IMAGEPATH2,CUMULUSON,pasta,ID)
     data= [X' Y' Z'];
     save('-ascii',fullfile(pasta,[num2str(ID) '.txt']),'data');
 
+    %salvar em pasta
+    data_pixel= [XLIN' YLIN'];
+    save('-ascii',fullfile(pasta,[num2str(ID) '_pixel.dat']),'data_pixel');
+
     %%% conf
     save('-ascii',fullfile(pasta,'out_all_params.txt'),'PARAMS');
  

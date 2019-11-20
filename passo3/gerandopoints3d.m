@@ -10,7 +10,7 @@ addpath(genpath('lib-mcode2'))
 
 % diretorio das imagens
 % DIRECTORY='../imagens/ResultadoFinalCorte';
-DIRECTORY='../imagens/img2_CaixaBranca_cut2' 
+DIRECTORY='../imagens/5_linha' 
 RESULTADO='output_points'; 
 
 % Dados do algoritmo de calibração
@@ -21,8 +21,8 @@ PARAMS=[    h0=1.16721909e+003; ...
             g=1.69999975e+002];
 
 % quantidade de imagens
-ENDD=14; 
-INIT=2;
+ENDD=18; 
+INIT=1;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,8 +30,8 @@ mkdir(RESULTADO);
 
 % salvando cada dado em um txt separado
 for ID=INIT:ENDD      
-  IMAGEREF = [DIRECTORY filesep num2str(ID) '_ref.bmp'];
-  IMAGEOBJ = [DIRECTORY filesep num2str(ID) '_obj.bmp'];
+  IMAGEREF = [DIRECTORY filesep num2str(ID) '_ref.jpg'];
+  IMAGEOBJ = [DIRECTORY filesep num2str(ID) '_obj.jpg'];
    
 
   disp(' ');

@@ -41,6 +41,28 @@ function juntar_arquivos_e_plot3d(RESULTADO,INIT,ENDD)
     save('-ascii',fullfile(RESULTADO,'out_all_data.txt'),'dat');
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% Juntar todos os dados em 'dat_pixel'
+
+    for ID=INIT:ENDD
+      filedata=fullfile(RESULTADO,[ num2str(ID)  '_pixel.dat']);
+      DDD=load (filedata);
+      disp(["Data pixel loaded :" filedata ]);
+
+      if(ID==INIT)
+        dat_pixel =DDD;
+      else
+        dat_pixel =[dat_pixel; DDD];
+      end
+ 
+    endfor
+    % Agora dat esta completo
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    save('-ascii',fullfile(RESULTADO,'out_all_data_pixel.txt'),'dat_pixel');
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     xi =linspace(min(dat(:,1)),max(dat(:,1)),NN);
     yi =linspace(min(dat(:,2)),max(dat(:,2)),2*(ENDD));
     [xxi, yyi] = meshgrid ( xi,yi);
