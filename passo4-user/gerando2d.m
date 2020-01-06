@@ -14,43 +14,26 @@ FILE_IMG="data-test/img_obj.jpg";
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    dat=load (FILE_DATA);
-    dat_pixel=load (FILE_DATA_PIXEL);
+    dat_unit=load (FILE_DATA); %% {unit_column,unit_line}
+    dat_pixel=load (FILE_DATA_PIXEL); %% {pixel_column,pixel_line}={pixel_x,pixel_y}
 
+
+%% mostrando a fotografia FILE_IMG modificando cores
+hfa=func_plot_new_modified_image_file(FILE_IMG,dat_pixel);
+
+%% Sleccionando os pontos point1=[col1 lin1] e point2=[col2 lin2]
+[point_pixel1, point_pixel2]=func_select_points(hfa)
+
+POLYORDER=3;
+point_unit1=func_transform_point(dat_unit,dat_pixel,point_pixel1,POLYORDER,48)
+point_unit2=func_transform_point(dat_unit,dat_pixel,point_pixel2,POLYORDER,48)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-IMG=imread(FILE_IMG);
-
-N=size(dat_pixel,1);
-
-for II=1:N
-    P=dat_pixel(II,:);
-    IMG(P(2),P(1),:)=0*IMG(P(2),P(1),:);
-end
-
-hfa=figure;
-image(IMG)
-daspect ([1 1 1]);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-h = msgbox ("Please, select the first point in the image", "Select poit: 1 of 2");
-[col1, lin1] = ginput (1);
-col1=round(col1)
-lin1=round(lin1)
-point1=[col1 lin1];
-
-h = msgbox ("Please, select the second point in the image", "Select poit: 2 of 2");
-[col2, lin2] = ginput (1);
-col2=round(col2)
-lin2=round(lin2)
-point2=[col2 lin2];
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function plot_3d_surface(dat_unit)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % plotando a superficie  de todos os dados de 'dat'
+    % plotando a superficie  de todos os dados de 'dat_unit'
     hf=figure;
-    scatter3(dat(:,1), dat(:,2), dat(:,3),[], dat(:,3))
+    scatter3(dat_unit(:,1), dat_unit(:,2), dat_unit(:,3),[], dat_unit(:,3))
     h1=gcf();
     xlabel('cm')
     ylabel('cm')
@@ -58,3 +41,4 @@ point2=[col2 lin2];
     view([-37.5, 30])
     colormap(jet)
     daspect ([1 1 1]);
+endfunction
