@@ -1,4 +1,4 @@
-function hfa=func_plot_new_modified_image_file(FILE_IMG,dat_pixel)
+function [hfa IMG]=func_plot_new_modified_image_file(FILE_IMG,dat_pixel)
 
     IMG=imread(FILE_IMG); %% imagem
 
@@ -11,8 +11,8 @@ function hfa=func_plot_new_modified_image_file(FILE_IMG,dat_pixel)
     end
 
     %% Plot da figura
-    hfa=figure;
     image(IMG)
     daspect ([1 1 1]);
+    hfa=gcf;
 endfunction
 
