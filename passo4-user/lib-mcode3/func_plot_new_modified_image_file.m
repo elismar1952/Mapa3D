@@ -16,5 +16,9 @@ function [hfa IMG]=func_plot_new_modified_image_file(FILE_IMG,dat_pixel)
     image(IMG)
     daspect ([1 1 1]);
     hfa=gcf;
+
+    xlabel('x-axis')
+    ylabel('y-axis')
+
 endfunction
 
